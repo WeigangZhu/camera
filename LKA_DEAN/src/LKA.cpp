@@ -3,15 +3,9 @@
 using namespace cv;
 using namespace std;
 
-
-
-
-
-
-
-
-
-
+int countL = 0,countR=0;
+int preL = 0,preR=0;
+int framecount = 0;		//视频帧计数
 
 int main()
 {
@@ -74,14 +68,14 @@ int main()
 			qsort(dR, countkR, sizeof(struct node), compare);
 			//-------------------左，右边车道卡尔曼滤波参数初始化----------------
 			randn(stateL, Scalar::all(0), Scalar::all(0.1));
-			KFL.transitionMatrix = *(Mat_<float>(4, 4) << 1, 0, 10, 0, 0, 1, 0, 10, 0, 0, 1, 0, 0, 0, 0, 1);  //状态转移矩阵A
+			KFL.transitionMatrix = (Mat_<float>(4, 4) << 1, 0, 10, 0, 0, 1, 0, 10, 0, 0, 1, 0, 0, 0, 0, 1);  //状态转移矩阵A
 			setIdentity(KFL.measurementMatrix);                                                             //观测矩阵H5
 			setIdentity(KFL.processNoiseCov, Scalar::all(1e-5));                                            //过程噪声协方差矩阵
 			setIdentity(KFL.measurementNoiseCov, Scalar::all(1e-2));                                        //测量噪声协方差矩阵
 			setIdentity(KFL.errorCovPost, Scalar::all(1));                                                  //后验估计误差协方差矩阵
 
 			randn(stateR, Scalar::all(0), Scalar::all(0.1));
-			KFR.transitionMatrix = *(Mat_<float>(4, 4) << 1, 0, 10, 0, 0, 1, 0, 10, 0, 0, 1, 0, 0, 0, 0, 1);  //状态转移矩阵A
+			KFR.transitionMatrix = (Mat_<float>(4, 4) << 1, 0, 10, 0, 0, 1, 0, 10, 0, 0, 1, 0, 0, 0, 0, 1);  //状态转移矩阵A
 			setIdentity(KFR.measurementMatrix);
 			setIdentity(KFR.processNoiseCov, Scalar::all(1e-5));
 			setIdentity(KFR.measurementNoiseCov, Scalar::all(1e-2));
@@ -255,13 +249,10 @@ int main()
 			cout << "距离右边车道线的距离=" << DR<<"mm" << '\n';
 			cout << "车道线总宽度=" << DL+DR<<"mm" << '\n';
 			string textL = "Left Lane", textR = "Right Lane";
-			string dataL = double_to_string(DL, 3), dataR = double_to_string(DR, 3);
-			
+						
 			putText(cutimage, textL, Point(cutimage.rows / 2-50, cutimage.cols / 2-10), CV_FONT_HERSHEY_DUPLEX, 0.5, Scalar(0, 255, 255));//参数:承载的图片，插入的文字，文字的位置（文本框左下角），字体，大小，颜色
 			putText(cutimage, textR, Point(cutimage.rows / 2 +140, cutimage.cols / 2-10 ), CV_FONT_HERSHEY_DUPLEX, 0.5, Scalar(0, 255, 255));
-			putText(cutimage, dataL, Point(cutimage.rows / 2 - 30, cutimage.cols / 2 +45), CV_FONT_HERSHEY_DUPLEX, 0.5, Scalar(0, 255, 255));//参数:承载的图片，插入的文字，文字的位置（文本框左下角），字体，大小，颜色
-			putText(cutimage, dataR, Point(cutimage.rows / 2 + 120, cutimage.cols / 2 +45), CV_FONT_HERSHEY_DUPLEX, 0.5, Scalar(0, 255, 255));
-			/*imshow("cutimage", cutimage);*/
+			/* imshow("cutimage", cutimage);*/
 			waitKey(10);
 		}
 	}
