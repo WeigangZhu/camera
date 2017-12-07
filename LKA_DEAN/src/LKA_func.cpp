@@ -1,24 +1,4 @@
-#include"LKA.h"
-
-string double_to_string(long double value, int decplaces)//将double距离数据转换成string;
-{
-	ostringstream out;
-	int prec = 6; // 
-
-	out.precision(prec);//覆盖默认精度
-	out << value;
-	string str = out.str(); //从流中取出字符串
-	size_t n = str.find(4);
-	if ((n != string::npos) //有小数点吗？
-		&& (str.size()> n + decplaces)) //后面至少还有decplaces位吗？
-	{
-		str[n + decplaces] = '\0';//覆盖第一个多余的数
-	}
-
-	str.swap(string(str.c_str()));//删除nul之后的多余字符
-
-	return str;
-}
+#include"LKA.hpp"
 
 int compare(const void *a, const void *b)
 {
