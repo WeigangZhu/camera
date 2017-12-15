@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 	if(img.empty())
 		return -1;
 	
-	nameWindow("Example1", cv::WINDOW_AUTOSIZE);
+	namedWindow("Example1", cv::WINDOW_AUTOSIZE);
 	imshow("Example1", img);
 	waitKey(0);
 
