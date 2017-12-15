@@ -21,11 +21,11 @@ endif()
 
 # COMPILE EXAMPLES
 add_executable( example_02-01 example_02-01.cpp )
-
+add_executable( example_02-02 example_02-02.cpp )
 
 ################
 ###   LINK   ###
 ################
 # LINK EXAMPLES:
 target_link_libraries( example_02-01 ${OpenCV_LIBS} )
-
+target_link_libraries( example_02-02 ${OpenCV_LIBS} )
